@@ -1,3 +1,5 @@
+require 'camping'
+
 Camping.goes :Battleship
 
 module Battleship::Controllers
