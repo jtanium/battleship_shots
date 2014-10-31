@@ -1,3 +1,3 @@
-require './hello'
+require './battleship'
 
-run Hello
+run Battleship
