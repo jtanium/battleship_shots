@@ -25,6 +25,12 @@ module Battleship::Controllers
     end
   end
 
+  class Migrate
+    def get
+      Battleship::Models.create_schema
+      redirect Index
+    end
+  end
 end
 
 module Battleship::Views
@@ -104,6 +110,6 @@ end
 
 Battleship::Models::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/battleship')
 
-def Battleship.create
-  Battleship::Models.create_schema
-end
+#def Battleship.create
+#  Battleship::Models.create_schema
+#end
