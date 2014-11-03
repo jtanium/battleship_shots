@@ -116,7 +116,7 @@ ActiveRecord::Base.establish_connection(
     :password => db.password,
     :database => db.path[1..-1],
     :encoding => 'utf8',
-    :pool => ENV['DB_POOL'] || 10
+    :pool => ENV['MAX_THREADS'] || 20
 )
 #Battleship::Models::Base.establish_connection(ENV['DATABASE_URL'] || 'postgres://localhost/battleship')
 
