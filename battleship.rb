@@ -38,18 +38,26 @@ module Battleship::Views
     html do
       head do
         title { 'Battleship!' }
+        link :rel => 'stylesheet', :href => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'
+        link :rel => 'stylesheet', :href => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css'
       end
       body do
         h1 'iTransact Battleship!'
-        form :action => '/next', :method => 'POST' do
-          input :type => 'submit', :value => 'Fire!'
+        div :class => 'container' do
+          p do
+          form :action => '/next', :method => 'POST' do
+            input :type => 'submit', :value => 'Fire! >>', :class => 'btn btn-primary btn-lg'
+          end
+          form :action => '/reset', :method => 'POST' do
+            input :type => 'submit', :value => 'Reset!', :class => 'btn btn-sm btn-danger'
+          end
+          end
+          h2 'Shots fired so far:'
+            self << yield
+            script :src => 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
+            script :src => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'
+          end
         end
-        form :action => '/reset', :method => 'POST' do
-          input :type => 'submit', :value => 'Reset!'
-        end
-        h2 'Shots fired so far:'
-        self << yield
-      end
     end
   end
 
@@ -82,14 +90,17 @@ module Battleship::Models
       end
 
       def fire!
-        unfired_shot = unfired_random
-        create!(:col => unfired_shot.col, :row => unfired_shot.row, :fired => true)
+        unfired_random.fire!
       end
 
       def unfired_random
         unfired_shots = unfired
         unfired_shots[rand(unfired_shots.count)]
       end
+    end
+
+    def fire!
+      self.update_attribute(:fired, true)
     end
   end
 
